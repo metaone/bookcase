@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:bookcase": "node dist/bookcase/server/server.mjs",
-    "deploy": "ng deploy --base-href=/bookcase/ --name=metaone"
+    "deploy": "ng deploy --base-href=/bookcase/"
   },
   "prettier": {
     "printWidth": 100,
