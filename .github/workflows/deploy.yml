@@ -14,16 +14,23 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [22.x]
+        node-version: [ 22.x ]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+          cache: "npm"
       - run: npm install --package-lock-only
       - run: npm ci
-      - run: |
-          git config --global user.email "you@example.com"
-          git config --global user.name "metaone"
-      - run: npm run deploy
+      - run: npm build --base-href=/${{ github.event.repository.name }}/
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: "./dist/${{ github.event.repository.name }}/browser"
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses:  actions/deploy-pages@v4
