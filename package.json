@@ -3,11 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --host 0.0.0.0",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:bookcase": "node dist/bookcase/server/server.mjs"
+    "serve:ssr:bookcase": "node dist/bookcase/server/server.mjs",
+    "deploy": "ng deploy --base-href=/bookcase/"
   },
   "prettier": {
     "printWidth": 100,
