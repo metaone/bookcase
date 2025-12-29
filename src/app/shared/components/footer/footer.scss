@@ -1,0 +1,11 @@
+@use "@angular/material" as mat;
+
+
+.app-footer {
+  display: flex;
+  justify-content: center;
+
+  span {
+    font-size: 14px;
+  }
+}
