@@ -1,8 +1,15 @@
-<mat-grid-list cols="2" rowHeight="100px">
-  <mat-grid-tile>1</mat-grid-tile>
-  <mat-grid-tile>2</mat-grid-tile>
-  <mat-grid-tile>3</mat-grid-tile>
-  <mat-grid-tile>4</mat-grid-tile>
-  <mat-grid-tile>5</mat-grid-tile>
+<mat-grid-list cols="5" rowHeight="300px">
+  @for (book of booksList; track $index) {
+    <mat-grid-tile>
+<!--      <app-book-card [book]="book"></app-book-card>-->
+      <div class="image-container">
+        <img src="covers/3Dgf6NqNNX8hXpw6HwpbsYhCbfamClcijxoXFSJH.jpg.webp" />
+      </div>
+      <div>
+        <span>{{ book.title }}!!!</span>
+      </div>
+    </mat-grid-tile>
+  }
 </mat-grid-list>
+
 <mat-paginator></mat-paginator>
