@@ -1,4 +1,4 @@
-<header class="text-bg-dark user-select-none">
+<header class="text-bg-dark user-select-none sticky-top">
   <div class="container">
     <div class="d-flex align-items-center justify-content-between">
       <div>
@@ -14,20 +14,6 @@
 
 <div class="container">
   <div class="books-wrapper row">
-    @for (book of bookStorage.books; track $index) {
-      <app-book-card
-        class="book col-4 col-md-3 col-lg-2"
-        [book]="book">
-      </app-book-card>
-    }
-
-    @for (book of bookStorage.books; track $index) {
-      <app-book-card
-        class="book col-4 col-md-3 col-lg-2"
-        [book]="book">
-      </app-book-card>
-    }
-
     @for (book of bookStorage.books; track $index) {
       <app-book-card
         class="book col-4 col-md-3 col-lg-2"
