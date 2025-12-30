@@ -12,6 +12,4 @@ import { MatGridList, MatGridTile } from '@angular/material/grid-list';
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
-export class Home {
-
-}
+export class Home {}
