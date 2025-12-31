@@ -31,4 +31,14 @@ export const BOOKS: BookMetadata[] = [
     title: 'Темна матерія',
     authors: ['Блейк Крауч'],
   },
+  {
+    coverImage: '15e0a8bc7.webp',
+    title: 'Убік',
+    authors: ['Філіп К. Дік'],
+  },
+  {
+    coverImage: '280e6d431.webp',
+    title: 'Чи мріють андроїди про електричних овець?',
+    authors: ['Філіп К. Дік'],
+  },
 ];

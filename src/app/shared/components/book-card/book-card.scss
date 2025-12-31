@@ -19,8 +19,8 @@
     .metadata-wrapper {
       font-size: 12px;
 
-      h6 {
-        margin: 0;
+      > div:nth-child(2) {
+        font-size: 14px;
       }
     }
   }

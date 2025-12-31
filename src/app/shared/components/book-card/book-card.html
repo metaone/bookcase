@@ -4,12 +4,12 @@
       <img src="covers/{{ book()?.coverImage }}">
     </div>
 
-    <div class="metadata-wrapper text-truncate">
+    <div class="metadata-wrapper">
       <div class="text-truncate">
         <span>{{ book()?.authors?.join(', ') }}</span>
       </div>
       <div class="text-truncate">
-        <h6>{{ book()?.title }}</h6>
+        <span class="fw-bold">{{ book()?.title }}</span>
       </div>
     </div>
   </div>
