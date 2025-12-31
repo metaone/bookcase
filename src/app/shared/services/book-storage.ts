@@ -15,16 +15,22 @@ export class BookStorage {
   private sortingOrder: SortingOrder = 'asc';
 
   constructor() {
-    this.parseBooksMetadata();
-    this.parseAuthorsMetadata();
+    this.initBooks();
+    this.initAuthors();
   }
 
-  parseBooksMetadata() {
+  /**
+   * Inits books list
+   */
+  initBooks() {
     this.books = [...BOOKS];
     this.applySorting();
   }
 
-  parseAuthorsMetadata() {
+  /**
+   * Inits authors list
+   */
+  initAuthors() {
     this.authors = [
       ...new Set(this.books.map((book) => book.authors).flat())
     ].sort();
@@ -33,9 +39,22 @@ export class BookStorage {
   /**
    * Returns list of books
    * @param searchText - Text to search by
+   * @param authors - List authors to filter
    */
-  getBooks(searchText: string = ''): BookMetadata[] {
-    return this.books.filter((book) => book.title.toLowerCase().includes(searchText.toLowerCase()));
+  getBooks(searchText: string = '', authors?: string[]): BookMetadata[] {
+    return this.books.filter((book) => {
+      let result = true;
+
+      if (searchText) {
+        result = book.title.toLowerCase().includes(searchText.toLowerCase());
+      }
+
+      if (authors) {
+        result = result && !!book.authors.find((author) => authors.includes(author));
+      }
+
+      return result;
+    });
   }
 
   /**
@@ -45,15 +64,26 @@ export class BookStorage {
     return this.authors;
   }
 
+  /**
+   * Sets new sorting order
+   * @param order - New order
+   */
   setOrdering(order: SortingOrder) {
     this.sortingOrder = order;
     this.applySorting();
   }
 
+  /**
+   * Return sorting order
+   */
   getOrdering(): SortingOrder {
     return this.sortingOrder;
   }
 
+  /**
+   * Applies sorting to books list
+   * @private
+   */
   private applySorting() {
     this.books.sort((a, b) => this.sortingOrder === 'desc'
       ? b.title.localeCompare(a.title)
