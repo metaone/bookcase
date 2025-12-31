@@ -8,5 +8,6 @@ import { BookMetadata } from '../../interfaces';
   styleUrl: './book-card.scss',
 })
 export class BookCard {
+  /** Book */
   book = input<BookMetadata>()
 }

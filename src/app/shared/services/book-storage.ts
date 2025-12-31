@@ -6,13 +6,21 @@ import { BookMetadata } from '../interfaces';
   providedIn: 'root',
 })
 export class BookStorage {
-  private readonly books: BookMetadata[];
-  private readonly authors: string[];
+  private books: BookMetadata[] = [];
+  private authors: string[] = [];
 
   constructor() {
+    this.parseBooksMetadata();
+    this.parseAuthorsMetadata();
+  }
+
+  parseBooksMetadata() {
     this.books = [
       ...BOOKS
     ].sort((a, b) => a.title.localeCompare(b.title));
+  }
+
+  parseAuthorsMetadata() {
     this.authors = [
       ...new Set(this.books.map((book) => book.authors).flat())
     ].sort();

@@ -3,3 +3,6 @@ export interface BookMetadata {
   coverImage: string;
   authors: string[];
 }
+export interface BookData extends BookMetadata {
+  id: number;
+}
