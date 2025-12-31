@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
-import { BookCard, BookMetadata, BookStorage } from '../../shared';
+import { BookCard, BookMetadata, BookStorage, SortingOrder } from '../../shared';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -22,14 +22,19 @@ export class HomePage implements OnInit {
   /**
    * @inheritDoc
    */
-  ngOnInit(): void {
+  ngOnInit() {
     this.booksList.set(this.bookStorage.getBooks());
   }
 
   /**
    * Handles on search action
    */
-  onSearch(): void {
+  onSearch() {
+    this.booksList.set(this.bookStorage.getBooks(this.searchText));
+  }
+
+  onSorting(order: SortingOrder) {
+    this.bookStorage.setOrdering(order);
     this.booksList.set(this.bookStorage.getBooks(this.searchText));
   }
 }
