@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { BookCard, BookMetadata, BookStorage } from '../../shared';
 import { FormsModule } from '@angular/forms';
 
@@ -12,15 +12,24 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './home-page.scss',
 })
 export class HomePage implements OnInit {
+  /** BookStorage service instance */
   bookStorage = inject(BookStorage);
-  booksList: BookMetadata[] = [];
-  searchText: string = '';
+  /** List of books */
+  booksList = signal<BookMetadata[]>([]);
+  /** Search text */
+  searchText = '';
 
+  /**
+   * @inheritDoc
+   */
   ngOnInit(): void {
-    this.booksList = this.bookStorage.getBooks();
+    this.booksList.set(this.bookStorage.getBooks());
   }
 
+  /**
+   * Handles on search action
+   */
   onSearch(): void {
-    this.booksList = this.bookStorage.getBooks(this.searchText);
+    this.booksList.set(this.bookStorage.getBooks(this.searchText));
   }
 }
