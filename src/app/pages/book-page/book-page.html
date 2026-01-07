@@ -13,22 +13,48 @@
 <div class="container">
   @if (book) {
     <div class="row">
-      <div class="col-4 col-md-4 col-lg-3">
-        <div>
-          <!--suppress AngularNgOptimizedImage -->
-          <img class="shadow-lg" src="covers/{{ book.coverImage }}" />
-        </div>
+      <div class="col-4 col-md-4 col-lg-2">
+        <!--suppress AngularNgOptimizedImage -->
+        <img class="shadow-lg" src="covers/{{ book.coverImage }}" />
       </div>
-      <div class="col-8 col-md-8 col-lg-9">
+      <div class="col-8 col-md-8 col-lg-10">
         <h1>{{ book.title }}</h1>
         <a href="#">{{ book.authors.join(', ') }}</a>
       </div>
     </div>
 
-    <div class="description-container">
-      @for (p of book.description; track $index) {
-        <p>{{ p }}</p>
+    <div ngbAccordion>
+      @if (true) {
+        <div ngbAccordionItem>
+          <h2 ngbAccordionHeader>
+            <button ngbAccordionButton>Зміст</button>
+          </h2>
+          <div ngbAccordionCollapse>
+            <div ngbAccordionBody>
+              <ng-template>
+                lorem ipsum
+              </ng-template>
+            </div>
+          </div>
+        </div>
       }
+
+      <div ngbAccordionItem [collapsed]="false">
+        <h2 ngbAccordionHeader>
+          <button ngbAccordionButton>Опис</button>
+        </h2>
+        <div ngbAccordionCollapse>
+          <div ngbAccordionBody>
+            <ng-template>
+              <div class="description-container">
+                @for (p of book.description; track $index) {
+                  <p>{{ p }}</p>
+                }
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
     </div>
   } @else {
     <app-no-results></app-no-results>

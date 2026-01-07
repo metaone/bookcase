@@ -31,7 +31,7 @@
   </div>
 </header>
 
-<div class="container" [(ngbCollapse)]="isFiltersHidden">
+<div class="container" [(ngbCollapse)]="isFiltersHidden" [animation]="false">
   <div class="filters-wrapper user-select-none">
     @for (model of authorModels; track $index) {
       <input class="form-check-input" type="checkbox" [id]="model.author" [(ngModel)]="model.isChecked" (ngModelChange)="onAuthorChange()">
@@ -47,9 +47,7 @@
         class="book col-4 col-md-3 col-lg-2"
         [book]="book">
       </app-book-card>
-    }
-
-    @if (!booksList().length) {
+    } @empty {
       <app-no-results></app-no-results>
     }
   </div>

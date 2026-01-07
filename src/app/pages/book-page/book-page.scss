@@ -13,7 +13,7 @@ header {
 }
 
 .row {
-  margin-top: 20px;
+  margin: 20px 0;
 
   img {
     width: 100%;
@@ -21,5 +21,9 @@ header {
 }
 
 .description-container {
-  margin-top: 20px;
+  text-align: justify;
+
+  p:last-child {
+    margin-bottom: 0;
+  }
 }
