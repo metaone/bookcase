@@ -1,9 +1,17 @@
 import { Routes } from '@angular/router';
-import { HomePage } from './pages';
+import { BookPage, HomePage } from './pages';
 
 export const routes: Routes = [
   {
-    path: '',
+    path: 'books',
     component: HomePage,
+  },
+  {
+    path: 'books/:bookId',
+    component: BookPage,
+  },
+  {
+    path: '**',
+    redirectTo: 'books'
   }
 ];

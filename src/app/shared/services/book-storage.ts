@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BOOKS } from '../models';
 import { BookMetadata } from '../interfaces';
 import { SortingOrder } from '../types';
+import { BooksCollection } from '../collections';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +23,7 @@ export class BookStorage {
    * Inits books list
    */
   initBooks() {
-    this.books = [...BOOKS];
+    this.books = [...BooksCollection];
     this.applySorting();
   }
 
@@ -31,7 +31,7 @@ export class BookStorage {
    * Inits authors list
    */
   initAuthors() {
-    this.authors = [
+    this.authors = <any>[
       ...new Set(this.books.map((book) => book.authors).flat())
     ].sort();
   }
@@ -89,5 +89,13 @@ export class BookStorage {
       ? b.title.localeCompare(a.title)
       : a.title.localeCompare(b.title)
     );
+  }
+
+  /**
+   * Returns book by ID
+   * @param id - Book ID to search
+   */
+  getById(id: number): BookMetadata | null {
+    return this.books.find((book) => book.id === id) || null;
   }
 }

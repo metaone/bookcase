@@ -2,20 +2,20 @@ header {
   padding: 20px 0;
 
   .actions-block {
+    cursor: pointer;
+
     svg {
       width: 24px;
       height: 24px;
-      cursor: pointer;
-      margin-left: 12px;
+      margin-right: 4px;
     }
   }
 }
 
-.filters-wrapper {
+.row {
   margin-top: 20px;
 
-  label {
-    padding-left: 4px;
-    margin-right: 16px;
+  img {
+    width: 100%;
   }
 }

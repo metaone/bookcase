@@ -1,5 +1,5 @@
-import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
-import { BookCard, BookMetadata, BookStorage, SortingOrder } from '../../shared';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { BookCard, BookMetadata, BookStorage, NoResults, SortingOrder } from '../../shared';
 import { FormsModule } from '@angular/forms';
 import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
 
@@ -8,7 +8,8 @@ import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
   imports: [
     BookCard,
     FormsModule,
-    NgbCollapse
+    NgbCollapse,
+    NoResults
   ],
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss',
@@ -33,7 +34,7 @@ export class HomePage implements OnInit {
     this.authorModels = this.bookStorage.getAuthors().map((author) => ({
       author,
       isChecked: true,
-    }))
+    }));
   }
 
   /**

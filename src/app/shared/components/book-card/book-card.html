@@ -1,15 +1,16 @@
-<div class="card shadow-lg user-select-none">
+<div class="card shadow-lg user-select-none" [routerLink]="['/books', book().id]">
   <div class="card-body">
     <div class="cover-wrapper">
-      <img src="covers/{{ book()?.coverImage }}">
+      <!--suppress AngularNgOptimizedImage -->
+      <img src="covers/{{ book().coverImage }}">
     </div>
 
     <div class="metadata-wrapper">
       <div class="text-truncate">
-        <span>{{ book()?.authors?.join(', ') }}</span>
+        <span>{{ book().authors.join(', ') }}</span>
       </div>
       <div class="text-truncate">
-        <span class="fw-bold">{{ book()?.title }}</span>
+        <span class="fw-bold">{{ book().title }}</span>
       </div>
     </div>
   </div>
