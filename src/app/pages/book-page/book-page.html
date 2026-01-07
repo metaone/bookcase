@@ -21,11 +21,14 @@
       </div>
       <div class="col-8 col-md-8 col-lg-9">
         <h1>{{ book.title }}</h1>
-        <h4>{{ book.authors.join(', ') }}</h4>
-        @for (p of book.description; track $index) {
-          <p>{{ p }}</p>
-        }
+        <a href="#">{{ book.authors.join(', ') }}</a>
       </div>
+    </div>
+
+    <div class="description-container">
+      @for (p of book.description; track $index) {
+        <p>{{ p }}</p>
+      }
     </div>
   } @else {
     <app-no-results></app-no-results>
