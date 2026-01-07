@@ -8,23 +8,14 @@ import { BooksCollection } from '../collections';
 })
 export class BookStorage {
   /** List of books */
-  private books: BookMetadata[] = [];
+  private books: BookMetadata[] = [...BooksCollection].sort((a, b) => a.title.localeCompare(b.title));
   /** List of authors */
   private authors: string[] = [];
   /** Sorting ordering value */
   private sortingOrder: SortingOrder = 'asc';
 
   constructor() {
-    this.initBooks();
     this.initAuthors();
-  }
-
-  /**
-   * Inits books list
-   */
-  initBooks() {
-    this.books = [...BooksCollection];
-    this.applySorting();
   }
 
   /**

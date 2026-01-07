@@ -5,4 +5,5 @@ export interface BookMetadata {
   title: string;
   coverImage: string;
   authors: Authors[];
+  description: string[];
 }

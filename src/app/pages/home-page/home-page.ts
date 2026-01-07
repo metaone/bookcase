@@ -18,7 +18,7 @@ export class HomePage implements OnInit {
   /** BookStorage service instance */
   bookStorage = inject(BookStorage);
   /** List of books */
-  booksList = signal<BookMetadata[]>([]);
+  booksList = signal(this.bookStorage.getBooks());
   /** Search text */
   searchText = '';
   /** Filters visibility */
@@ -30,7 +30,6 @@ export class HomePage implements OnInit {
    * @inheritDoc
    */
   ngOnInit() {
-    this.booksList.set(this.bookStorage.getBooks());
     this.authorModels = this.bookStorage.getAuthors().map((author) => ({
       author,
       isChecked: true,
