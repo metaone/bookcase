@@ -18,7 +18,7 @@
         <img class="shadow-lg" src="covers/{{ book.coverImage }}" />
       </div>
       <div class="col-8 col-md-8 col-lg-10">
-        <h1>{{ book.title }}</h1>
+        <h3>{{ book.title }}</h3>
         <a href="#">{{ book.authors.join(', ') }}</a>
       </div>
     </div>
@@ -32,7 +32,14 @@
           <div ngbAccordionCollapse>
             <div ngbAccordionBody>
               <ng-template>
-                lorem ipsum
+                  @for (item of book.contents; track $index) {
+                    <div class="list-group-item1">
+                      <span>{{ item.title }}</span> (@for (author of item.authors; track $index) {
+                        <a href="#">{{ author }}</a>
+                        @if (!$last) {, }
+                      })
+                    </div>
+                  }
               </ng-template>
             </div>
           </div>

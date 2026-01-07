@@ -1,9 +1,15 @@
-import { Authors } from '../enums';
+import { Authors, Books } from '../enums';
 
 export interface BookMetadata {
   id: number;
-  title: string;
+  title: Books;
   coverImage: string;
   authors: Authors[];
   description: string[];
+  contents: BookMetadataContentsItem[];
+}
+
+export interface BookMetadataContentsItem {
+  authors: Authors[];
+  title: Books;
 }
