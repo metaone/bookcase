@@ -19,6 +19,14 @@ header {
   img {
     width: 100%;
   }
+
+  .genres-wrapper {
+    margin-top: 8px;
+
+    .badge {
+      margin-right: 4px;
+    }
+  }
 }
 
 .description-container {

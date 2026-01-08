@@ -19,7 +19,17 @@
       </div>
       <div class="col-8 col-md-8 col-lg-10">
         <h3>{{ book.title }}</h3>
-        <a href="#">{{ book.authors.join(', ') }}</a>
+        <div class="authors-wrapper">
+          @for (author of book.authors; track $index) {
+            <a href="#">{{ author }}</a>
+            @if (!$last) {, }
+          }
+        </div>
+        <div class="genres-wrapper">
+          @for (genre of book.genres; track $index) {
+            <span class="badge text-bg-primary user-select-none">{{ genre }}</span>
+          }
+        </div>
       </div>
     </div>
 
