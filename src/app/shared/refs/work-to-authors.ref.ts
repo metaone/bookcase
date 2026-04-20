@@ -1,0 +1,30 @@
+import { AuthorsCollection, WorksCollection } from '../collections';
+
+/** Work to authors list reference */
+export const WorkToAuthorsRef: Record<WorksCollection, AuthorsCollection[]> = {
+  [WorksCollection.Сосни]: [AuthorsCollection['Блейк Крауч']],
+  [WorksCollection.Облуда]: [AuthorsCollection['Блейк Крауч']],
+  [WorksCollection['Останнє місто']]: [AuthorsCollection['Блейк Крауч']],
+  [WorksCollection['Рік Щура']]: [AuthorsCollection['Чень Цюфань']],
+  [WorksCollection['Ліцзянські рибки']]: [AuthorsCollection['Чень Цюфань']],
+  [WorksCollection['Шацзуйська квітка']]: [AuthorsCollection['Чень Цюфань']],
+  [WorksCollection['Тонтонове літо']]: [AuthorsCollection['Ся Цзя']],
+  [WorksCollection['Нічна прогулянка дракона']]: [AuthorsCollection['Ся Цзя']],
+  [WorksCollection['Місто тиші']]: [AuthorsCollection['Ма Боюн']],
+  [WorksCollection['Невидимі планети']]: [AuthorsCollection['Хао Цзінфан']],
+  [WorksCollection['Складаний Пекін']]: [AuthorsCollection['Хао Цзінфан']],
+  [WorksCollection['Сороміцька оповідка']]: [AuthorsCollection['Тан Фей']],
+  [WorksCollection['Гробниця світляків']]: [AuthorsCollection['Чен Цзінбо']],
+  [WorksCollection['Опіка над Богом']]: [AuthorsCollection['Лю Цисінь']],
+  [WorksCollection.Апґрейд]: [AuthorsCollection['Блейк Крауч']],
+  [WorksCollection.Рекурсія]: [AuthorsCollection['Блейк Крауч']],
+  [WorksCollection['Темна матерія']]: [AuthorsCollection['Блейк Крауч']],
+  [WorksCollection.Убік]: [AuthorsCollection['Філіп К. Дік']],
+  [WorksCollection['Чи мріють андроїди про електричних овець?']]: [AuthorsCollection['Філіп К. Дік']],
+  [WorksCollection['Ігрові консолі 2.0. Історія у фотографіях від Atari до Xbox']]: [AuthorsCollection['Еван Амос']],
+  [WorksCollection['Всесвітній атлас тату']]: [AuthorsCollection['Анна Фелісіті Фрідман']],
+  [WorksCollection['1984. Графічний роман']]: [
+    AuthorsCollection['Джордж Орвелл'],
+    AuthorsCollection['Ксав\'є Кост'],
+  ],
+}

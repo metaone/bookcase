@@ -1,1 +1,2 @@
-export * from './book-metadata';
+export * from './books.interfaces';
+export * from './works.interfaces';

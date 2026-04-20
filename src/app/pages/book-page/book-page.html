@@ -1,11 +1,7 @@
 <header class="text-bg-dark user-select-none sticky-top">
   <div class="container">
     <div class="d-inline-flex align-items-center actions-block" routerLink="/books">
-      <!--suppress HtmlDeprecatedAttribute -->
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
-        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
-      </svg>
-      <span>Back</span>
+      <span>Назад</span>
     </div>
   </div>
 </header>
@@ -21,20 +17,20 @@
         <h3>{{ book.title }}</h3>
         <div class="authors-wrapper">
           @for (author of book.authors; track $index) {
-            <a href="#">{{ author }}</a>
+            <a href="#">{{ author.name }}</a>
             @if (!$last) {, }
           }
         </div>
         <div class="genres-wrapper">
           @for (genre of book.genres; track $index) {
-            <span class="badge text-bg-primary user-select-none">{{ genre }}</span>
+            <span class="badge text-bg-primary user-select-none">{{ genre.name }}</span>
           }
         </div>
       </div>
     </div>
 
     <div ngbAccordion>
-      @if (book.contents.length) {
+      @if (book.works.length) {
         <div ngbAccordionItem>
           <h2 ngbAccordionHeader>
             <button ngbAccordionButton>Зміст</button>
@@ -42,14 +38,31 @@
           <div ngbAccordionCollapse>
             <div ngbAccordionBody>
               <ng-template>
-                  @for (item of book.contents; track $index) {
-                    <div class="list-group-item1">
+                  @for (item of book.works; track $index) {
+                    <div>
                       <span>{{ item.title }}</span> (@for (author of item.authors; track $index) {
-                        <a href="#">{{ author }}</a>
+                        <a href="#">{{ author.name }}</a>
                         @if (!$last) {, }
                       })
                     </div>
                   }
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      }
+
+      @if (book.series) {
+        <div ngbAccordionItem>
+          <h2 ngbAccordionHeader>
+            <button ngbAccordionButton>Серія</button>
+          </h2>
+          <div ngbAccordionCollapse>
+            <div ngbAccordionBody>
+              <ng-template>
+                <div>
+                  {{ book.series.title }}
+                </div>
               </ng-template>
             </div>
           </div>
@@ -64,7 +77,7 @@
           <div ngbAccordionBody>
             <ng-template>
               <div class="description-container">
-                @for (p of book.description; track $index) {
+                @for (p of book.blurp; track $index) {
                   <p>{{ p }}</p>
                 }
               </div>

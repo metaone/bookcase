@@ -10,6 +10,9 @@ import {
   NgbAccordionItem
 } from '@ng-bootstrap/ng-bootstrap';
 
+/**
+ * Book page component
+ */
 @Component({
   selector: 'app-book-page',
   imports: [
@@ -30,6 +33,7 @@ export class BookPage {
   private activatedRoute = inject(ActivatedRoute);
   /** BookStorage service instance */
   private bookStorage = inject(BookStorage);
+
   /** Book model */
   book = this.bookStorage.getById(Number(this.activatedRoute.snapshot.params['bookId']));
 }

@@ -1,7 +1,10 @@
 import { Component, input } from '@angular/core';
-import { BookMetadata } from '../../interfaces';
 import { RouterLink } from '@angular/router';
+import { BookModel } from '../../models';
 
+/**
+ * Book card component
+ */
 @Component({
   selector: 'app-book-card',
   imports: [
@@ -12,5 +15,5 @@ import { RouterLink } from '@angular/router';
 })
 export class BookCard {
   /** Book */
-  book = input.required<BookMetadata>()
+  book = input.required<BookModel>()
 }

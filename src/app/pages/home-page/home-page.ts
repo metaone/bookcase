@@ -1,8 +1,14 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { BookCard, BookMetadata, BookStorage, NoResults, SortingOrder } from '../../shared';
+import { AuthorsCollection, BookCard, BookStorage, NoResults, SortingOrder } from '../../shared';
 import { FormsModule } from '@angular/forms';
 import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
+import { AuthorStorage } from '../../shared/services/author-storage';
+import { BookModel } from '../../shared/models';
 
+
+/**
+ * Home page component
+ */
 @Component({
   selector: 'app-home-page',
   imports: [
@@ -17,30 +23,39 @@ import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
 export class HomePage implements OnInit {
   /** BookStorage service instance */
   bookStorage = inject(BookStorage);
+  /** AuthorStorage service instance */
+  authorStorage = inject(AuthorStorage);
+
   /** List of books */
-  booksList = signal(this.bookStorage.getBooks());
+  booksList = signal<BookModel[]>([]);
+
   /** Search text */
-  searchText = '';
+  searchQuery = '';
   /** Filters visibility */
   isFiltersHidden = true;
   /** Authors models list */
-  authorModels: { author: string; isChecked: boolean; }[] = [];
+  authorModels: { id: AuthorsCollection, author: string; isChecked: boolean; }[] = [];
+
+  /** Sorting ordering value */
+  sortingOrder: SortingOrder = 'asc';
 
   /**
    * @inheritDoc
    */
   ngOnInit() {
-    this.authorModels = this.bookStorage.getAuthors().map((author) => ({
-      author,
+    this.authorModels = this.authorStorage.getAll().map((author) => ({
+      id: author.id,
+      author: author.name,
       isChecked: true,
     }));
+    this.fetchBooks();
   }
 
   /**
    * Handles on search action
    */
   onSearch() {
-    this.updateBooks();
+    this.fetchBooks();
   }
 
   /**
@@ -48,27 +63,28 @@ export class HomePage implements OnInit {
    * @param order
    */
   onSorting(order: SortingOrder) {
-    this.bookStorage.setOrdering(order);
-    this.updateBooks();
+    this.sortingOrder = order;
+    this.fetchBooks();
   }
 
   /**
    * Handles on author change action
    */
   onAuthorChange() {
-    this.updateBooks();
+    this.fetchBooks();
   }
 
   /**
    * Updates books list
    * @private
    */
-  private updateBooks() {
+  private fetchBooks() {
     this.booksList.set(
-      this.bookStorage.getBooks(
-        this.searchText,
-        this.authorModels.filter((item) => item.isChecked).map((item) => item.author),
-      )
+      this.bookStorage.getAll({
+        searchQuery: this.searchQuery,
+        sortingOrder: this.sortingOrder,
+        authorsIds: this.authorModels.filter((item) => item.isChecked).map((item) => item.id),
+      })
     );
   }
 }
