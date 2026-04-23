@@ -27,4 +27,11 @@ export const WorkToAuthorsRef: Record<WorksCollection, AuthorsCollection[]> = {
     AuthorsCollection['Джордж Орвелл'],
     AuthorsCollection['Ксав\'є Кост'],
   ],
+  [WorksCollection['І прокинеться Левіафан']]: [AuthorsCollection['Джеймс Корі']],
+  [WorksCollection['Війна Калібана']]: [AuthorsCollection['Джеймс Корі']],
+  [WorksCollection['Брама Абаддона']]: [AuthorsCollection['Джеймс Корі']],
+  [WorksCollection['На згарищі Сіболи']]: [AuthorsCollection['Джеймс Корі']],
+  [WorksCollection['Ігри Немезиди']]: [AuthorsCollection['Джеймс Корі']],
+  [WorksCollection['У попелі Вавилону']]: [AuthorsCollection['Джеймс Корі']],
+  [WorksCollection['Сходження Персеполісу']]: [AuthorsCollection['Джеймс Корі']],
 }

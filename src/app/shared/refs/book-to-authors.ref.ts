@@ -19,4 +19,11 @@ export const BookToAuthorsRef: Record<BooksCollection, AuthorsCollection[]> = {
     AuthorsCollection['Джордж Орвелл'],
     AuthorsCollection['Ксав\'є Кост'],
   ],
+  [BooksCollection['Експансія. Книга 1. І прокинеться Левіафан']]: [AuthorsCollection['Джеймс Корі']],
+  [BooksCollection['Експансія. Книга 2. Війна Калібана']]: [AuthorsCollection['Джеймс Корі']],
+  [BooksCollection['Експансія. Книга 3. Брама Абаддона']]: [AuthorsCollection['Джеймс Корі']],
+  [BooksCollection['Експансія. Книга 4. На згарищі Сіболи']]: [AuthorsCollection['Джеймс Корі']],
+  [BooksCollection['Експансія. Книга 5. Ігри Немезиди']]: [AuthorsCollection['Джеймс Корі']],
+  [BooksCollection['Експансія. Книга 6. У попелі Вавилону']]: [AuthorsCollection['Джеймс Корі']],
+  [BooksCollection['Експансія. Книга 7. Сходження Персеполісу']]: [AuthorsCollection['Джеймс Корі']],
 }

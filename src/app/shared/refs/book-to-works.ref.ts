@@ -30,4 +30,11 @@ export const BookToWorksRef: Record<BooksCollection, WorksCollection[]> = {
   ],
   [BooksCollection['Всесвітній атлас тату']]: [WorksCollection['Всесвітній атлас тату']],
   [BooksCollection['1984. Графічний роман']]: [WorksCollection['1984. Графічний роман']],
+  [BooksCollection['Експансія. Книга 1. І прокинеться Левіафан']]: [WorksCollection['І прокинеться Левіафан']],
+  [BooksCollection['Експансія. Книга 2. Війна Калібана']]: [WorksCollection['Війна Калібана']],
+  [BooksCollection['Експансія. Книга 3. Брама Абаддона']]: [WorksCollection['Брама Абаддона']],
+  [BooksCollection['Експансія. Книга 4. На згарищі Сіболи']]: [WorksCollection['На згарищі Сіболи']],
+  [BooksCollection['Експансія. Книга 5. Ігри Немезиди']]: [WorksCollection['Ігри Немезиди']],
+  [BooksCollection['Експансія. Книга 6. У попелі Вавилону']]: [WorksCollection['У попелі Вавилону']],
+  [BooksCollection['Експансія. Книга 7. Сходження Персеполісу']]: [WorksCollection['Сходження Персеполісу']],
 }

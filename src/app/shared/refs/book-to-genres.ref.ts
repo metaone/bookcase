@@ -33,4 +33,46 @@ export const BookToGenresRef: Record<BooksCollection, GenresCollection[]> = {
     GenresCollection['Антиутопія'],
     GenresCollection['Артбук'],
   ],
+  [BooksCollection['Експансія. Книга 1. І прокинеться Левіафан']]: [
+    GenresCollection.Фантастика,
+    GenresCollection['Воєнна фантастика'],
+    GenresCollection['Космічна фантастика'],
+    GenresCollection.Пригоди,
+  ],
+  [BooksCollection['Експансія. Книга 2. Війна Калібана']]: [
+    GenresCollection.Фантастика,
+    GenresCollection['Воєнна фантастика'],
+    GenresCollection['Космічна фантастика'],
+    GenresCollection.Пригоди,
+  ],
+  [BooksCollection['Експансія. Книга 3. Брама Абаддона']]: [
+    GenresCollection.Фантастика,
+    GenresCollection['Воєнна фантастика'],
+    GenresCollection['Космічна фантастика'],
+    GenresCollection.Пригоди,
+  ],
+  [BooksCollection['Експансія. Книга 4. На згарищі Сіболи']]: [
+    GenresCollection.Фантастика,
+    GenresCollection['Воєнна фантастика'],
+    GenresCollection['Космічна фантастика'],
+    GenresCollection.Пригоди,
+  ],
+  [BooksCollection['Експансія. Книга 5. Ігри Немезиди']]: [
+    GenresCollection.Фантастика,
+    GenresCollection['Воєнна фантастика'],
+    GenresCollection['Космічна фантастика'],
+    GenresCollection.Пригоди,
+  ],
+  [BooksCollection['Експансія. Книга 6. У попелі Вавилону']]: [
+    GenresCollection.Фантастика,
+    GenresCollection['Воєнна фантастика'],
+    GenresCollection['Космічна фантастика'],
+    GenresCollection.Пригоди,
+  ],
+  [BooksCollection['Експансія. Книга 7. Сходження Персеполісу']]: [
+    GenresCollection.Фантастика,
+    GenresCollection['Воєнна фантастика'],
+    GenresCollection['Космічна фантастика'],
+    GenresCollection.Пригоди,
+  ],
 }
