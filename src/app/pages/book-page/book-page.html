@@ -1,92 +1,106 @@
-<header class="text-bg-dark user-select-none sticky-top">
-  <div class="container">
-    <div class="d-inline-flex align-items-center actions-block" routerLink="/books">
-      <span>Назад</span>
-    </div>
-  </div>
-</header>
+<div class="container page-container">
+  <div class="card shadow">
+    <div class="card-body">
+      <nav>
+        <ol class="breadcrumb align-items-center">
+          <li class="breadcrumb-item">
+            <a routerLink="/">Головна</a>
+          </li>
+          <li class="breadcrumb-item">
+            <a routerLink="/books">Книги</a>
+          </li>
+          <li class="breadcrumb-item active">
+            {{ book?.title }}
+          </li>
+        </ol>
+      </nav>
 
-<div class="container">
-  @if (book) {
-    <div class="row">
-      <div class="col-4 col-md-4 col-lg-2">
-        <!--suppress AngularNgOptimizedImage -->
-        <img class="shadow-lg" src="covers/{{ book.coverImage }}" />
-      </div>
-      <div class="col-8 col-md-8 col-lg-10">
-        <h3>{{ book.title }}</h3>
-        <div class="authors-wrapper">
-          @for (author of book.authors; track $index) {
-            <a href="#">{{ author.name }}</a>
-            @if (!$last) {, }
-          }
-        </div>
-        <div class="genres-wrapper">
-          @for (genre of book.genres; track $index) {
-            <span class="badge text-bg-primary user-select-none">{{ genre.name }}</span>
-          }
-        </div>
-      </div>
-    </div>
+<!--      <div class="text-truncate">-->
+<!--        <a routerLink="/">Головна</a> / <a routerLink="/books">Книги</a> / {{ book?.title }}sdf asdf asdf asdf asdf asdf-->
+<!--      </div>-->
 
-    <div ngbAccordion>
-      @if (book.works.length) {
-        <div ngbAccordionItem>
-          <h2 ngbAccordionHeader>
-            <button ngbAccordionButton>Зміст</button>
-          </h2>
-          <div ngbAccordionCollapse>
-            <div ngbAccordionBody>
-              <ng-template>
-                  @for (item of book.works; track $index) {
-                    <div>
-                      <span>{{ item.title }}</span> (@for (author of item.authors; track $index) {
+      @if (book) {
+        <div class="row">
+          <div class="col-4 col-md-4 col-lg-2">
+            <!--suppress AngularNgOptimizedImage -->
+            <img class="shadow-lg" src="covers/{{ book.coverImage }}" />
+          </div>
+          <div class="col-8 col-md-8 col-lg-10">
+            <h3>{{ book.title }}</h3>
+            <div class="authors-wrapper">
+              @for (author of book.authors; track $index) {
+                <a [routerLink]="['/authors', author.id]">{{ author.name }}</a>
+                @if (!$last) {, }
+              }
+            </div>
+            <div class="genres-wrapper">
+              @for (genre of book.genres; track $index) {
+                <span class="badge text-bg-primary user-select-none">{{ genre.name }}</span>
+              }
+            </div>
+          </div>
+        </div>
+
+        <div ngbAccordion>
+          @if (book.works.length) {
+            <div ngbAccordionItem>
+              <h2 ngbAccordionHeader>
+                <button ngbAccordionButton>Зміст</button>
+              </h2>
+              <div ngbAccordionCollapse>
+                <div ngbAccordionBody>
+                  <ng-template>
+                    @for (item of book.works; track $index) {
+                      <div>
+                        <span>{{ item.title }}</span> (@for (author of item.authors; track $index) {
                         <a href="#">{{ author.name }}</a>
                         @if (!$last) {, }
                       })
-                    </div>
-                  }
-              </ng-template>
-            </div>
-          </div>
-        </div>
-      }
-
-      @if (book.series) {
-        <div ngbAccordionItem>
-          <h2 ngbAccordionHeader>
-            <button ngbAccordionButton>Серія</button>
-          </h2>
-          <div ngbAccordionCollapse>
-            <div ngbAccordionBody>
-              <ng-template>
-                <div>
-                  {{ book.series.title }}
+                      </div>
+                    }
+                  </ng-template>
                 </div>
-              </ng-template>
+              </div>
+            </div>
+          }
+
+          @if (book.series) {
+            <div ngbAccordionItem>
+              <h2 ngbAccordionHeader>
+                <button ngbAccordionButton>Серія</button>
+              </h2>
+              <div ngbAccordionCollapse>
+                <div ngbAccordionBody>
+                  <ng-template>
+                    <div>
+                      {{ book.series.title }}
+                    </div>
+                  </ng-template>
+                </div>
+              </div>
+            </div>
+          }
+
+          <div ngbAccordionItem [collapsed]="false">
+            <h2 ngbAccordionHeader>
+              <button ngbAccordionButton>Опис</button>
+            </h2>
+            <div ngbAccordionCollapse>
+              <div ngbAccordionBody>
+                <ng-template>
+                  <div class="description-container">
+                    @for (p of book.blurp; track $index) {
+                      <p>{{ p }}</p>
+                    }
+                  </div>
+                </ng-template>
+              </div>
             </div>
           </div>
         </div>
+      } @else {
+        <app-no-results></app-no-results>
       }
-
-      <div ngbAccordionItem [collapsed]="false">
-        <h2 ngbAccordionHeader>
-          <button ngbAccordionButton>Опис</button>
-        </h2>
-        <div ngbAccordionCollapse>
-          <div ngbAccordionBody>
-            <ng-template>
-              <div class="description-container">
-                @for (p of book.blurp; track $index) {
-                  <p>{{ p }}</p>
-                }
-              </div>
-            </ng-template>
-          </div>
-        </div>
-      </div>
     </div>
-  } @else {
-    <app-no-results></app-no-results>
-  }
+  </div>
 </div>

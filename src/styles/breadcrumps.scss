@@ -1,0 +1,13 @@
+nav {
+  .breadcrumb {
+    margin-bottom: 0;
+    align-items: center;
+
+    .breadcrumb-item {
+      max-width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}

@@ -1,6 +1,7 @@
 import { Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { BookModel } from '../../models';
+import { NgOptimizedImage } from '@angular/common';
 
 /**
  * Book card component
@@ -8,7 +9,8 @@ import { BookModel } from '../../models';
 @Component({
   selector: 'app-book-card',
   imports: [
-    RouterLink
+    RouterLink,
+    NgOptimizedImage
   ],
   templateUrl: './book-card.html',
   styleUrl: './book-card.scss',

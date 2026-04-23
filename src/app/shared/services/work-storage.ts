@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { WorkModel } from '../models';
 import { Nullable } from '../types';
 import { WorksCollection } from '../collections';
+import { WorkFetchOptions } from '../interfaces';
 
 
 /**
@@ -34,7 +35,13 @@ export class WorkStorage {
   /**
    * Returns all works
    */
-  getAll(): WorkModel[] {
-    return this.items;
+  getAll(options: WorkFetchOptions = { sortingOrder: 'asc' }): WorkModel[] {
+    return this.items
+      .filter((work) => !options.searchQuery || work.includes(options.searchQuery))
+      .filter((work) => !options.authorsIds || !options.authorsIds.length || work.hasAuthor(options.authorsIds))
+      .sort((a, b) => options.sortingOrder === 'desc'
+        ? b.title.localeCompare(a.title)
+        : a.title.localeCompare(b.title)
+      );
   }
 }

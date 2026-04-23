@@ -1,8 +1,7 @@
-.main-content {
-  min-height: calc(100dvh - 84px);
-}
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'variables';
 
-footer {
-  padding: 20px 0;
-  margin-top: 20px;
+.main-content {
+  min-height: calc(100dvh - #{$app-header-height} - #{$app-footer-height} - 4 * 8px);
 }

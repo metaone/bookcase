@@ -1,0 +1,102 @@
+<div class="container actions-container">
+  <div class="input-group">
+    <input type="search" class="form-control rounded-pill shadow" placeholder="Пошук..." [(ngModel)]="searchQuery" (keyup)="fetchBooks()">
+    <button (click)="onSorting()" class="btn btn-light rounded-pill shadow">
+      Сортувати
+      @if (sortingOrder === 'asc') {
+        <i class="bi bi-sort-alpha-down"></i>
+      } @else {
+        <i class="bi bi-sort-alpha-up"></i>
+      }
+    </button>
+    <button (click)="openFilters(offcanvas)" class="btn btn-light rounded-pill shadow">
+      Фільтри
+      <i class="bi bi-sliders2"></i>
+    </button>
+  </div>
+</div>
+
+<div class="container page-container">
+  <div class="card shadow">
+    <div class="card-body">
+      <nav>
+        <ol class="breadcrumb align-items-center">
+          <li class="breadcrumb-item">
+            <a routerLink="/">Головна</a>
+          </li>
+          <li class="breadcrumb-item">
+            Книги
+          </li>
+        </ol>
+      </nav>
+
+      @if (booksList().length) {
+        <div class="row">
+          @for (book of booksList(); track $index) {
+            <app-book-card
+              class="col-4 col-md-3 col-lg-2"
+              [book]="book">
+            </app-book-card>
+          }
+        </div>
+      } @else {
+        <app-no-results></app-no-results>
+      }
+    </div>
+  </div>
+</div>
+
+<ng-template #offcanvas let-offcanvas>
+  <div class="offcanvas-body">
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-light rounded-pill" (click)="offcanvas.dismiss()">
+        Закрити
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <div class="card card-filter shadow">
+      <div class="card-body">
+        <div (click)="authorFilterCollapse = !authorFilterCollapse" class="card-filter-title d-flex align-items-center justify-content-between user-select-none">
+          <strong>Автори:</strong>
+          @if (authorFilterOptions) {
+            <i class="bi bi-chevron-down"></i>
+          } @else {
+            <i class="bi bi-chevron-up"></i>
+          }
+        </div>
+
+        <div class="card-filter-collapse" [(ngbCollapse)]="authorFilterCollapse">
+          @for (author of authorFilterOptions; track $index) {
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" [id]="author.value" [(ngModel)]="author.checked" (ngModelChange)="fetchBooks()">
+              <label class="form-check-label" [for]="author.value">{{ author.value }}</label>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-filter shadow">
+      <div class="card-body">
+        <div (click)="genreFilterCollapse = !genreFilterCollapse" class="card-filter-title d-flex align-items-center justify-content-between user-select-none">
+          <strong>Жанри:</strong>
+          @if (genreFilterCollapse) {
+            <i class="bi bi-chevron-down"></i>
+          } @else {
+            <i class="bi bi-chevron-up"></i>
+          }
+        </div>
+
+        <div class="card-filter-collapse" [(ngbCollapse)]="genreFilterCollapse">
+          @for (genre of genreFilterOptions; track $index) {
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" [id]="genre.value" [(ngModel)]="genre.checked" (ngModelChange)="fetchBooks()">
+              <label class="form-check-label" [for]="genre.value">{{ genre.value }}</label>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

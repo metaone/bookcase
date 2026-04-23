@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AuthorModel } from '../models';
 import { AuthorsCollection } from '../collections';
 import { Nullable } from '../types';
+import { AuthorFetchOptions } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +28,12 @@ export class AuthorStorage {
   /**
    * Returns all authors
    */
-  getAll(): AuthorModel[] {
-    return this.items;
+  getAll(options: AuthorFetchOptions = { sortingOrder: 'asc' }): AuthorModel[] {
+    return this.items
+      .filter((author) => !options.searchQuery || author.includes(options.searchQuery))
+      .sort((a, b) => options.sortingOrder === 'desc'
+        ? b.name.localeCompare(a.name)
+        : a.name.localeCompare(b.name)
+      );
   }
 }

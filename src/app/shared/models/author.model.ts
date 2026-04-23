@@ -15,4 +15,8 @@ export class AuthorModel {
     this.id = authorId;
     this.name = AuthorsCollection[authorId];
   }
+
+  includes(substring: string = ''): boolean {
+    return this.name.toLowerCase().includes(substring.toLowerCase());
+  }
 }

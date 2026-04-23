@@ -27,6 +27,14 @@ export class WorkModel {
       name: AuthorsCollection[authorId],
     }));
   }
+
+  includes(substring: string = ''): boolean {
+    return this.title.toLowerCase().includes(substring.toLowerCase());
+  }
+
+  hasAuthor(ids: AuthorsCollection[] = []): boolean {
+    return !!this.authors.find((author) => ids.includes(author.id));
+  }
 }
 
 

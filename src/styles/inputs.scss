@@ -1,0 +1,10 @@
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+
+.form-control, .btn {
+  font-size: 14px;
+}
+
+.btn-light {
+  background-color: $white;
+}

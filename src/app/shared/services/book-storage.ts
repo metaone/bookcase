@@ -36,7 +36,8 @@ export class BookStorage {
   getAll(options: BookFetchOptions = { sortingOrder: 'asc' }): BookModel[] {
     return this.items
       .filter((book) => !options.searchQuery || book.includes(options.searchQuery))
-      .filter((book) => !options.authorsIds || book.hasAuthor(options.authorsIds))
+      .filter((book) => !options.authorsIds || !options.authorsIds.length || book.hasAuthor(options.authorsIds))
+      .filter((book) => !options.genresIds || !options.genresIds.length || book.hasGenre(options.genresIds))
       .sort((a, b) => options.sortingOrder === 'desc'
         ? b.title.localeCompare(a.title)
         : a.title.localeCompare(b.title)

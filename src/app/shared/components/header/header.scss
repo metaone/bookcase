@@ -1,0 +1,32 @@
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'variables';
+
+:host {
+  .sticky-top {
+    padding: 8px 0;
+  }
+
+  .navbar {
+    height: $app-header-height;
+    padding: 0;
+    border: 1px solid $gray-300;
+    border-radius: $app-border-radius;
+    background-color: $white;
+
+    .navbar-nav {
+      width: 100%;
+
+      .active-link {
+        border: 1px solid $gray-700;
+        background-color: $gray-700;
+        border-radius: $app-border-radius;
+
+        a {
+          font-weight: bold;
+          color: $white;
+        }
+      }
+    }
+  }
+}

@@ -39,7 +39,10 @@
             "stylePreprocessorOptions": {
               "sass": {
                 "silenceDeprecations": ["import"]
-              }
+              },
+              "includePaths": [
+                "src/styles"
+              ]
             }
           },
           "configurations": {

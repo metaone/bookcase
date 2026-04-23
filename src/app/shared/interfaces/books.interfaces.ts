@@ -29,6 +29,7 @@ export interface BookWorkField {
 /** Book fetch options */
 export interface BookFetchOptions {
   searchQuery?: string;
-  authorsIds?: any[];
-  sortingOrder: SortingOrder;
+  authorsIds?: AuthorsCollection[];
+  genresIds?: GenresCollection[];
+  sortingOrder?: SortingOrder;
 }

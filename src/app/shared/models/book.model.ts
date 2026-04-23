@@ -94,4 +94,8 @@ export class BookModel {
     return !!this.authors.find((author) => ids.includes(author.id)) ||
       !!this.works.find((work) => work.authors.find((author) => ids.includes(author.id)));
   }
+
+  hasGenre(ids: GenresCollection[] = []): boolean {
+    return !!this.genres.find((genre) => ids.includes(genre.id));
+  }
 }

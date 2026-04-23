@@ -1,20 +1,11 @@
-<div class="card shadow-lg user-select-none" [routerLink]="['/books', book().id]">
-  <div class="card-body">
-    <div class="cover-wrapper">
-      <!--suppress AngularNgOptimizedImage -->
-      <img src="covers/{{ book().coverImage }}">
-    </div>
+<div class="user-select-none" [routerLink]="['/books', book().id]">
+  <div class="cover-wrapper">
+    <img ngSrc="covers/{{ book().coverImage }}" fill />
+  </div>
 
-    <div class="metadata-wrapper">
-      <div class="text-truncate">
-        @for (author of book().authors; track $index) {
-          <span href="#">{{ author.name }}</span>
-          @if (!$last) {, }
-        }
-      </div>
-      <div class="text-truncate">
-        <span class="fw-bold">{{ book().title }}</span>
-      </div>
+  <div class="metadata-wrapper">
+    <div class="text-truncate">
+      <span class="">{{ book().title }}</span>
     </div>
   </div>
 </div>
