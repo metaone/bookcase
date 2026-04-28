@@ -98,4 +98,8 @@ export class BookModel {
   hasGenre(ids: GenresCollection[] = []): boolean {
     return !!this.genres.find((genre) => ids.includes(genre.id));
   }
+
+  hasSeries(ids: SeriesCollection[] = []): boolean {
+    return !!this.series && ids.includes(this.series.id);
+  }
 }

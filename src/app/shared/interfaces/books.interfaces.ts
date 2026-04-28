@@ -31,5 +31,6 @@ export interface BookFetchOptions {
   searchQuery?: string;
   authorsIds?: AuthorsCollection[];
   genresIds?: GenresCollection[];
+  seriesIds?: SeriesCollection[];
   sortingOrder?: SortingOrder;
 }

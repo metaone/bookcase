@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Nullable, SortingOrder } from '../types';
+import { Nullable } from '../types';
 import { BooksCollection } from '../collections';
 import { BookModel } from '../models';
 import { BookFetchOptions } from '../interfaces';
@@ -38,6 +38,7 @@ export class BookStorage {
       .filter((book) => !options.searchQuery || book.includes(options.searchQuery))
       .filter((book) => !options.authorsIds || !options.authorsIds.length || book.hasAuthor(options.authorsIds))
       .filter((book) => !options.genresIds || !options.genresIds.length || book.hasGenre(options.genresIds))
+      .filter((book) => !options.seriesIds || !options.seriesIds.length || book.hasSeries(options.seriesIds))
       .sort((a, b) => options.sortingOrder === 'desc'
         ? b.title.localeCompare(a.title)
         : a.title.localeCompare(b.title)

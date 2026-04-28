@@ -1,11 +1,11 @@
-import { Component, inject, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, signal, TemplateRef } from '@angular/core';
 import {
   AuthorsCollection,
   BookCard,
   BookStorage, FilterCheckboxInterfaces,
   GenresCollection,
   GenreStorage,
-  NoResults,
+  NoResults, SeriesCollection, SeriesStorage,
   SortingOrder
 } from '../../shared';
 import { FormsModule } from '@angular/forms';
@@ -37,6 +37,7 @@ export class BooksPage implements OnInit {
   private authorStorage = inject(AuthorStorage);
 
   private genreStorage = inject(GenreStorage);
+  private seriesStorage = inject(SeriesStorage);
 
   private offcanvas = inject(NgbOffcanvas);
 
@@ -52,6 +53,8 @@ export class BooksPage implements OnInit {
   authorFilterCollapse = false;
   genreFilterOptions: FilterCheckboxInterfaces[];
   genreFilterCollapse = false;
+  seriesFilterOptions: FilterCheckboxInterfaces[];
+  seriesFilterCollapse = false;
 
   constructor() {
     this.authorFilterOptions = this.authorStorage.getAll().map((author) => ({
@@ -63,6 +66,12 @@ export class BooksPage implements OnInit {
     this.genreFilterOptions = this.genreStorage.getAll().map((genre) => ({
       id: genre.id,
       value: genre.name,
+      checked: false,
+    }));
+
+    this.seriesFilterOptions = this.seriesStorage.getAll().map((series) => ({
+      id: series.id,
+      value: series.title,
       checked: false,
     }));
   }
@@ -97,6 +106,7 @@ export class BooksPage implements OnInit {
         sortingOrder: this.sortingOrder,
         authorsIds: this.authorFilterOptions.filter((item) => item.checked).map((item) => <AuthorsCollection>item.id),
         genresIds: this.genreFilterOptions.filter((item) => item.checked).map((item) => <GenresCollection>item.id),
+        seriesIds: this.seriesFilterOptions.filter((item) => item.checked).map((item) => <SeriesCollection>item.id),
       })
     );
   }

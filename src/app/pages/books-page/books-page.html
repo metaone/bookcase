@@ -98,5 +98,27 @@
         </div>
       </div>
     </div>
+
+    <div class="card card-filter shadow">
+      <div class="card-body">
+        <div (click)="seriesFilterCollapse = !seriesFilterCollapse" class="card-filter-title d-flex align-items-center justify-content-between user-select-none">
+          <strong>Серії:</strong>
+          @if (seriesFilterCollapse) {
+            <i class="bi bi-chevron-down"></i>
+          } @else {
+            <i class="bi bi-chevron-up"></i>
+          }
+        </div>
+
+        <div class="card-filter-collapse" [(ngbCollapse)]="seriesFilterCollapse">
+          @for (series of seriesFilterOptions; track $index) {
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" [id]="series.value" [(ngModel)]="series.checked" (ngModelChange)="fetchBooks()">
+              <label class="form-check-label" [for]="series.value">{{ series.value }}</label>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
   </div>
 </ng-template>
