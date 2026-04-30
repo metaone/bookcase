@@ -34,4 +34,7 @@ export const WorkToAuthorsRef: Record<WorksCollection, AuthorsCollection[]> = {
   [WorksCollection['Ігри Немезиди']]: [AuthorsCollection['Джеймс Корі']],
   [WorksCollection['У попелі Вавилону']]: [AuthorsCollection['Джеймс Корі']],
   [WorksCollection['Сходження Персеполісу']]: [AuthorsCollection['Джеймс Корі']],
+  [WorksCollection.Знищення]: [AuthorsCollection['Джефф Вандермеєр']],
+  [WorksCollection.Засвідчення]: [AuthorsCollection['Джефф Вандермеєр']],
+  [WorksCollection.Замирення]: [AuthorsCollection['Джефф Вандермеєр']],
 }

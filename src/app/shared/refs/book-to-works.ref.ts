@@ -37,4 +37,7 @@ export const BookToWorksRef: Record<BooksCollection, WorksCollection[]> = {
   [BooksCollection['Експансія. Книга 5. Ігри Немезиди']]: [WorksCollection['Ігри Немезиди']],
   [BooksCollection['Експансія. Книга 6. У попелі Вавилону']]: [WorksCollection['У попелі Вавилону']],
   [BooksCollection['Експансія. Книга 7. Сходження Персеполісу']]: [WorksCollection['Сходження Персеполісу']],
+  [BooksCollection['Південний округ. Книга 1. Знищення']]: [WorksCollection.Знищення],
+  [BooksCollection['Південний Округ. Книга 2. Засвідчення']]: [WorksCollection.Засвідчення],
+  [BooksCollection['Південний округ. Книга 3. Замирення']]: [WorksCollection.Замирення],
 }

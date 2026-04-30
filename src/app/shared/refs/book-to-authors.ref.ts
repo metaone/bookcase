@@ -26,4 +26,7 @@ export const BookToAuthorsRef: Record<BooksCollection, AuthorsCollection[]> = {
   [BooksCollection['Експансія. Книга 5. Ігри Немезиди']]: [AuthorsCollection['Джеймс Корі']],
   [BooksCollection['Експансія. Книга 6. У попелі Вавилону']]: [AuthorsCollection['Джеймс Корі']],
   [BooksCollection['Експансія. Книга 7. Сходження Персеполісу']]: [AuthorsCollection['Джеймс Корі']],
+  [BooksCollection['Південний округ. Книга 1. Знищення']]: [AuthorsCollection['Джефф Вандермеєр']],
+  [BooksCollection['Південний Округ. Книга 2. Засвідчення']]: [AuthorsCollection['Джефф Вандермеєр']],
+  [BooksCollection['Південний округ. Книга 3. Замирення']]: [AuthorsCollection['Джефф Вандермеєр']],
 }

@@ -75,4 +75,19 @@ export const BookToGenresRef: Record<BooksCollection, GenresCollection[]> = {
     GenresCollection['Космічна фантастика'],
     GenresCollection.Пригоди,
   ],
+  [BooksCollection['Південний округ. Книга 1. Знищення']]: [
+    GenresCollection.Горор,
+    GenresCollection.Фантастика,
+    GenresCollection.Пригоди,
+  ],
+  [BooksCollection['Південний Округ. Книга 2. Засвідчення']]: [
+    GenresCollection.Горор,
+    GenresCollection.Фантастика,
+    GenresCollection.Пригоди,
+  ],
+  [BooksCollection['Південний округ. Книга 3. Замирення']]: [
+    GenresCollection.Горор,
+    GenresCollection.Фантастика,
+    GenresCollection.Пригоди,
+  ],
 }

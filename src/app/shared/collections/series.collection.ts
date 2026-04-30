@@ -2,4 +2,5 @@
 export enum SeriesCollection {
   'Облудні сосни',
   'Експансія',
+  'Південний Округ',
 }
