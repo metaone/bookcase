@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { NoResults, SeriesStorage, SortingOrder } from '../../shared';
 import { SeriesModel, WorkModel } from '../../shared/models';
 import { FormsModule } from '@angular/forms';
@@ -12,6 +12,7 @@ import { RouterLink } from '@angular/router';
     NoResults
   ],
   templateUrl: './series-page.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './series-page.scss',
 })
 export class SeriesPage {

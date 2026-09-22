@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { AuthorStorage } from '../../shared/services/author-storage';
 import { AuthorModel } from '../../shared/models';
 import { RouterLink } from '@angular/router';
@@ -14,6 +14,7 @@ import { AuthorsCollection, GenresCollection, NoResults, SortingOrder } from '..
     NoResults
   ],
   templateUrl: './authors-page.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './authors-page.scss',
 })
 export class AuthorsPage {

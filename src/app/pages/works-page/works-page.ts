@@ -1,4 +1,4 @@
-import { Component, inject, signal, TemplateRef, ViewChild } from '@angular/core';
+import { Component, inject, signal, TemplateRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import {
   AuthorsCollection,
   AuthorStorage,
@@ -22,6 +22,7 @@ import { NgbCollapse, NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
     NgbCollapse
   ],
   templateUrl: './works-page.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './works-page.scss',
 })
 export class WorksPage {

@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { BookModel } from '../../models';
 import { NgOptimizedImage } from '@angular/common';
@@ -13,6 +13,7 @@ import { NgOptimizedImage } from '@angular/common';
     NgOptimizedImage
   ],
   templateUrl: './book-card.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './book-card.scss',
 })
 export class BookCard {

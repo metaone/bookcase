@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal, TemplateRef } from '@angular/core';
+import { Component, inject, OnInit, signal, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
 import {
   AuthorsCollection,
   BookCard,
@@ -28,6 +28,7 @@ import { RouterLink } from '@angular/router';
     RouterLink,
   ],
   templateUrl: './books-page.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './books-page.scss',
 })
 export class BooksPage implements OnInit {

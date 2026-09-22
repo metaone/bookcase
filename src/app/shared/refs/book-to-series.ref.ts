@@ -12,4 +12,7 @@ export const BookToSeriesRef: Partial<Record<BooksCollection, SeriesCollection>>
   [BooksCollection['Експансія. Книга 5. Ігри Немезиди']]: SeriesCollection.Експансія,
   [BooksCollection['Експансія. Книга 6. У попелі Вавилону']]: SeriesCollection.Експансія,
   [BooksCollection['Експансія. Книга 7. Сходження Персеполісу']]: SeriesCollection.Експансія,
+  [BooksCollection['Південний округ. Книга 1. Знищення']]: SeriesCollection['Південний Округ'],
+  [BooksCollection['Південний Округ. Книга 2. Засвідчення']]: SeriesCollection['Південний Округ'],
+  [BooksCollection['Південний округ. Книга 3. Замирення']]: SeriesCollection['Південний Округ'],
 }

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { BookStorage, NoResults } from '../../shared';
 import {
@@ -26,6 +26,7 @@ import {
     NgbAccordionBody,
   ],
   templateUrl: './book-page.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './book-page.scss',
 })
 export class BookPage {

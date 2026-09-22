@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { BookCard, BookStorage, NoResults, Nullable, SortingOrder } from '../../shared';
 import { AuthorModel, BookModel } from '../../shared/models';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -14,6 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     RouterLink,
   ],
   templateUrl: './author-page.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './author-page.scss',
 })
 export class AuthorPage implements OnInit {
