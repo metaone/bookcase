@@ -1,16 +1,13 @@
-import { Component, inject, signal, TemplateRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy, OnInit, Input } from '@angular/core';
 import {
-  AuthorsCollection,
   AuthorStorage,
-  FilterCheckboxInterfaces,
-  NoResults,
+  NoResults, QueryParamsStore,
   SortingOrder,
   WorkStorage
 } from '../../shared';
 import { WorkModel } from '../../shared/models';
 import { RouterLink } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgbCollapse, NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-works-page',
@@ -19,48 +16,55 @@ import { NgbCollapse, NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
     ReactiveFormsModule,
     FormsModule,
     NoResults,
-    NgbCollapse
   ],
   templateUrl: './works-page.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './works-page.scss',
 })
-export class WorksPage {
+export class WorksPage implements OnInit {
+  /** Search text */
+  @Input() searchQuery?: string;
+  /** Sorting ordering value */
+  @Input() sortingOrder?: SortingOrder;
   private workStorage = inject(WorkStorage);
+  /** Query Param Store */
+  private queryParamStore = inject(QueryParamsStore);
   private authorStorage = inject(AuthorStorage);
-  private offcanvas = inject(NgbOffcanvas);
-
-  worksList = signal<WorkModel[]>(this.workStorage.getAll());
-
-  searchQuery = '';
-  sortingOrder: SortingOrder = 'asc';
-  authorFilterOptions: FilterCheckboxInterfaces[];
-  authorFilterCollapse = false;
-
-  constructor() {
-    this.authorFilterOptions = this.authorStorage.getAll().map((author) => ({
-      id: author.id,
-      value: author.name,
-      checked: false,
-    }));
-  }
+  worksList = signal<WorkModel[]>([]);
 
 
-  onSorting() {
-    this.sortingOrder = this.sortingOrder === 'desc' ? 'asc' : 'desc';
+  /**
+   * @inheritDoc
+   */
+  ngOnInit() {
     this.fetchWorks();
   }
 
-  openFilters(template: TemplateRef<any>) {
-    this.offcanvas.open(template, { position: 'start' });
+  /**
+   * Handles on sorting action
+   */
+  async onSorting() {
+    this.sortingOrder = this.sortingOrder === 'desc' ? 'asc' : 'desc';
+    await this.queryParamStore.updateQueryParams({ sortingOrder: this.sortingOrder });
+    this.fetchWorks();
   }
 
+  /**
+   * Handles on search keyup action
+   */
+  async onSearchKeyup() {
+    await this.queryParamStore.updateQueryParams({ searchQuery: this.searchQuery || null });
+    this.fetchWorks();
+  }
+
+  /**
+   * Fetches works list
+   */
   fetchWorks() {
     this.worksList.set(
       this.workStorage.getAll({
         searchQuery: this.searchQuery,
         sortingOrder: this.sortingOrder,
-        authorsIds: this.authorFilterOptions.filter((item) => item.checked).map((item) => <AuthorsCollection>item.id),
       }),
     );
   }

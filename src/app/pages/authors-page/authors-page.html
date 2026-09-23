@@ -1,6 +1,6 @@
 <div class="container actions-container">
   <div class="input-group">
-    <input type="text" class="form-control rounded-pill shadow" placeholder="Пошук..." [(ngModel)]="searchQuery" (keyup)="fetchAuthors()">
+    <input type="text" class="form-control rounded-pill shadow" placeholder="Пошук..." [(ngModel)]="searchQuery" (keyup)="onSearchKeyup()">
     <button (click)="onSorting()" class="btn btn-light rounded-pill shadow">
       Сортувати
       @if (sortingOrder === 'asc') {
@@ -31,7 +31,7 @@
           <tbody>
             @for (author of authorsList(); track $index) {
               <tr>
-                <td><a [routerLink]="['/authors', author.id]">{{ author.name }}</a></td>
+                <td><a [routerLink]="['/books']" [queryParams]="{ authorFilter: author.id }">{{ author.name }}</a></td>
               </tr>
             }
           </tbody>

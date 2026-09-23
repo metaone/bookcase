@@ -1,5 +1,5 @@
-import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
-import { NoResults, SeriesStorage, SortingOrder } from '../../shared';
+import { Component, inject, signal, ChangeDetectionStrategy, OnInit, Input } from '@angular/core';
+import { NoResults, QueryParamsStore, SeriesStorage, SortingOrder } from '../../shared';
 import { SeriesModel, WorkModel } from '../../shared/models';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -15,18 +15,46 @@ import { RouterLink } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './series-page.scss',
 })
-export class SeriesPage {
+export class SeriesPage implements OnInit {
+  /** Search text */
+  @Input() searchQuery?: string;
+  /** Sorting ordering value */
+  @Input() sortingOrder?: SortingOrder;
+  /** Series Storage */
   private seriesStorage = inject(SeriesStorage);
-  sortingOrder: SortingOrder = 'asc';
-  searchQuery = '';
-  seriesList = signal<SeriesModel[]>(this.seriesStorage.getAll());
+  /** Query Param Store */
+  private queryParamStore = inject(QueryParamsStore);
+  /** List of series */
+  seriesList = signal<SeriesModel[]>([]);
 
-  onSorting() {
-    this.sortingOrder = this.sortingOrder === 'desc' ? 'asc' : 'desc';
-    this.fetchWorks();
+  /**
+   * @inheritDoc
+   */
+  ngOnInit() {
+    this.fetchSeries();
   }
 
-  fetchWorks() {
+  /**
+   * Handles on sorting action
+   */
+  async onSorting() {
+    this.sortingOrder = this.sortingOrder === 'desc' ? 'asc' : 'desc';
+    await this.queryParamStore.updateQueryParams({ sortingOrder: this.sortingOrder });
+    this.fetchSeries();
+  }
+
+  /**
+   * Handles on search keyup action
+   */
+  async onSearchKeyup() {
+    await this.queryParamStore.updateQueryParams({ searchQuery: this.searchQuery || null });
+    this.fetchSeries();
+  }
+
+  /**
+   * Fetches series list
+   */
+  fetchSeries() {
     this.seriesList.set(
       this.seriesStorage.getAll({
         searchQuery: this.searchQuery,

@@ -76,7 +76,7 @@ export class BooksPage implements OnInit {
 
   /** Opens filters sidebar */
   openFilters(template: TemplateRef<any>) {
-    this.offcanvas.open(template, { position: 'start' });
+    this.offcanvas.open(template, { position: 'end' });
   }
 
   /**
@@ -160,9 +160,8 @@ export class BooksPage implements OnInit {
 
   /**
    * Updates books list
-   * @protected
    */
-  protected fetchBooks() {
+  fetchBooks() {
     this.booksList.set(
       this.bookStorage.getAll({
         searchQuery: this.searchQuery,

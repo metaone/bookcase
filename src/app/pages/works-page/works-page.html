@@ -1,6 +1,6 @@
 <div class="container actions-container">
   <div class="input-group">
-    <input type="text" class="form-control rounded-pill shadow" placeholder="Пошук..." [(ngModel)]="searchQuery" (keyup)="fetchWorks()">
+    <input type="text" class="form-control rounded-pill shadow" placeholder="Пошук..." [(ngModel)]="searchQuery" (keyup)="onSearchKeyup()">
     <button (click)="onSorting()" class="btn btn-light rounded-pill shadow">
       Сортувати
       @if (sortingOrder === 'asc') {
@@ -8,10 +8,6 @@
       } @else {
         <i class="bi bi-sort-alpha-up"></i>
       }
-    </button>
-    <button (click)="openFilters(offcanvas)" class="btn btn-light rounded-pill shadow">
-      Фільтри
-      <i class="bi bi-sliders2"></i>
     </button>
   </div>
 </div>
@@ -48,36 +44,3 @@
     </div>
   </div>
 </div>
-
-<ng-template #offcanvas let-offcanvas>
-  <div class="offcanvas-body">
-    <div class="d-flex justify-content-end">
-      <button class="btn btn-light rounded-pill" (click)="offcanvas.dismiss()">
-        Закрити
-        <i class="bi bi-x-lg"></i>
-      </button>
-    </div>
-
-    <div class="card card-filter shadow">
-      <div class="card-body">
-        <div (click)="authorFilterCollapse = !authorFilterCollapse" class="card-filter-title d-flex align-items-center justify-content-between user-select-none">
-          <strong>Автори:</strong>
-          @if (authorFilterCollapse) {
-            <i class="bi bi-chevron-down"></i>
-          } @else {
-            <i class="bi bi-chevron-up"></i>
-          }
-        </div>
-
-        <div class="card-filter-collapse" [(ngbCollapse)]="authorFilterCollapse">
-          @for (author of authorFilterOptions; track $index) {
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" [id]="author.value" [(ngModel)]="author.checked" (ngModelChange)="fetchWorks()">
-              <label class="form-check-label" [for]="author.value">{{ author.value }}</label>
-            </div>
-          }
-        </div>
-      </div>
-    </div>
-  </div>
-</ng-template>

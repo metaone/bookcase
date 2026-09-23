@@ -1,6 +1,6 @@
 <div class="container actions-container">
   <div class="input-group">
-    <input type="text" class="form-control rounded-pill shadow" placeholder="Пошук..." [(ngModel)]="searchQuery" (keyup)="fetchWorks()">
+    <input type="text" class="form-control rounded-pill shadow" placeholder="Пошук..." [(ngModel)]="searchQuery" (keyup)="onSearchKeyup()">
     <button (click)="onSorting()" class="btn btn-light rounded-pill shadow">
       Сортувати
       @if (sortingOrder === 'asc') {
@@ -32,7 +32,7 @@
             @for (series of seriesList(); track $index) {
               <tr>
                 <td>
-                  <a href="#">{{ series.title }}</a>
+                  <a [routerLink]="['/books']" [queryParams]="{ seriesFilter: series.id }">{{ series.title }}</a>
                 </td>
               </tr>
             }

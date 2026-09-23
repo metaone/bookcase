@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { AuthorPage, AuthorsPage, BookPage, BooksPage, SeriesPage, WorksPage } from './pages';
+import { AuthorsPage, BookPage, BooksPage, SeriesPage, WorksPage } from './pages';
 
 export const routes: Routes = [
   {
@@ -13,10 +13,6 @@ export const routes: Routes = [
   {
     path: 'authors',
     component: AuthorsPage,
-  },
-  {
-    path: 'authors/:authorId',
-    component: AuthorPage,
   },
   {
     path: 'works',

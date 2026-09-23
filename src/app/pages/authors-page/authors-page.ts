@@ -1,9 +1,8 @@
-import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
-import { AuthorStorage } from '../../shared/services/author-storage';
-import { AuthorModel } from '../../shared/models';
+import { Component, inject, signal, ChangeDetectionStrategy, Input, OnInit } from '@angular/core';
+import { AuthorModel, BookModel } from '../../shared/models';
 import { RouterLink } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AuthorsCollection, GenresCollection, NoResults, SortingOrder } from '../../shared';
+import { AuthorStorage, NoResults, QueryParamsStore, SortingOrder } from '../../shared';
 
 @Component({
   selector: 'app-authors-page',
@@ -17,19 +16,46 @@ import { AuthorsCollection, GenresCollection, NoResults, SortingOrder } from '..
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './authors-page.scss',
 })
-export class AuthorsPage {
-  authorStorage = inject(AuthorStorage);
-  sortingOrder: SortingOrder = 'asc';
-  searchQuery = '';
+export class AuthorsPage implements OnInit {
+  /** Search text */
+  @Input() searchQuery?: string;
+  /** Sorting ordering value */
+  @Input() sortingOrder?: SortingOrder;
+  /** Author Storage */
+  private authorStorage = inject(AuthorStorage);
+  /** Query Param Store */
+  private queryParamStore = inject(QueryParamsStore);
+  /** List of authors */
+  authorsList = signal<AuthorModel[]>([]);
 
-  authorsList = signal<AuthorModel[]>(this.authorStorage.getAll());
-
-  onSorting() {
-    this.sortingOrder = this.sortingOrder === 'desc' ? 'asc' : 'desc';
+  /**
+   * @inheritDoc
+   */
+  ngOnInit() {
     this.fetchAuthors();
   }
 
-  protected fetchAuthors() {
+  /**
+   * Handles on sorting action
+   */
+  async onSorting() {
+    this.sortingOrder = this.sortingOrder === 'desc' ? 'asc' : 'desc';
+    await this.queryParamStore.updateQueryParams({ sortingOrder: this.sortingOrder });
+    this.fetchAuthors();
+  }
+
+  /**
+   * Handles on search keyup action
+   */
+  async onSearchKeyup() {
+    await this.queryParamStore.updateQueryParams({ searchQuery: this.searchQuery || null });
+    this.fetchAuthors();
+  }
+
+  /**
+   * Fetches authors list
+   */
+  fetchAuthors() {
     this.authorsList.set(
       this.authorStorage.getAll({
         searchQuery: this.searchQuery,
