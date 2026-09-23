@@ -1,11 +1,11 @@
-import { Component, inject, OnInit, signal, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, OnInit, signal, TemplateRef, ChangeDetectionStrategy, Input } from '@angular/core';
 import {
   AuthorsCollection,
   BookCard,
   BookStorage, FilterCheckboxInterfaces,
   GenresCollection,
   GenreStorage,
-  NoResults, SeriesCollection, SeriesStorage,
+  NoResults, QueryParamsStore, SeriesCollection, SeriesStorage,
   SortingOrder
 } from '../../shared';
 import { FormsModule } from '@angular/forms';
@@ -41,14 +41,15 @@ export class BooksPage implements OnInit {
   private seriesStorage = inject(SeriesStorage);
 
   private offcanvas = inject(NgbOffcanvas);
+  private queryParamStore = inject(QueryParamsStore);
 
   /** List of books */
   booksList = signal<BookModel[]>([]);
 
   /** Search text */
-  searchQuery = '';
+  @Input() searchQuery = '';
   /** Sorting ordering value */
-  sortingOrder: SortingOrder = 'asc';
+  @Input() sortingOrder: SortingOrder = 'asc';
 
   authorFilterOptions: FilterCheckboxInterfaces[];
   authorFilterCollapse = false;
@@ -91,8 +92,9 @@ export class BooksPage implements OnInit {
   /**
    * Handles on sorting action
    */
-  onSorting() {
+  async onSorting() {
     this.sortingOrder = this.sortingOrder === 'desc' ? 'asc' : 'desc';
+    await this.queryParamStore.updateQueryParams({ sortingOrder: this.sortingOrder });
     this.fetchBooks();
   }
 
@@ -101,6 +103,7 @@ export class BooksPage implements OnInit {
    * @protected
    */
   protected fetchBooks() {
+
     this.booksList.set(
       this.bookStorage.getAll({
         searchQuery: this.searchQuery,
