@@ -3,7 +3,9 @@ import { ActivatedRoute, Params, QueryParamsHandling, Router } from '@angular/ro
 
 @Service()
 export class QueryParamsStore {
+  /** Router */
   private router = inject(Router);
+  /** Activated Route */
   private route = inject(ActivatedRoute);
 
   /**

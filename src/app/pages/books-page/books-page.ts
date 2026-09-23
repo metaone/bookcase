@@ -15,9 +15,6 @@ import { BookModel } from '../../shared/models';
 import { RouterLink } from '@angular/router';
 
 
-/**
- * Home page component
- */
 @Component({
   selector: 'app-books-page',
   imports: [
@@ -32,61 +29,77 @@ import { RouterLink } from '@angular/router';
   styleUrl: './books-page.scss',
 })
 export class BooksPage implements OnInit {
-  /** BookStorage service instance */
+  /** Search text */
+  @Input() searchQuery?: string;
+  /** Sorting ordering value */
+  @Input() sortingOrder?: SortingOrder;
+  /** Author filter */
+  @Input() authorFilter?: string;
+  /** Genre filter */
+  @Input() genreFilter?: string;
+  /** Series filter */
+  @Input() seriesFilter?: string;
+  /** Book Storage */
   private bookStorage = inject(BookStorage);
-  /** AuthorStorage service instance */
+  /** Author Storage */
   private authorStorage = inject(AuthorStorage);
-
+  /** Genre Storage */
   private genreStorage = inject(GenreStorage);
+  /** Series Storage */
   private seriesStorage = inject(SeriesStorage);
-
-  private offcanvas = inject(NgbOffcanvas);
+  /** Query Param Store */
   private queryParamStore = inject(QueryParamsStore);
-
+  /** Offcanvas */
+  private offcanvas = inject(NgbOffcanvas);
   /** List of books */
   booksList = signal<BookModel[]>([]);
-
-  /** Search text */
-  @Input() searchQuery = '';
-  /** Sorting ordering value */
-  @Input() sortingOrder: SortingOrder = 'asc';
-
-  authorFilterOptions: FilterCheckboxInterfaces[];
+  /** Author filter options */
+  authorFilterOptions: FilterCheckboxInterfaces[] = [];
+  /** Author filter collapse state */
   authorFilterCollapse = false;
-  genreFilterOptions: FilterCheckboxInterfaces[];
+  /** Genre filter options */
+  genreFilterOptions: FilterCheckboxInterfaces[] = [];
+  /** Genre filter collapse state */
   genreFilterCollapse = false;
-  seriesFilterOptions: FilterCheckboxInterfaces[];
+  /** Series filter options */
+  seriesFilterOptions: FilterCheckboxInterfaces[] = [];
+  /** Series filter collapse state */
   seriesFilterCollapse = false;
-
-  constructor() {
-    this.authorFilterOptions = this.authorStorage.getAll().map((author) => ({
-      id: author.id,
-      value: author.name,
-      checked: false,
-    }));
-
-    this.genreFilterOptions = this.genreStorage.getAll().map((genre) => ({
-      id: genre.id,
-      value: genre.name,
-      checked: false,
-    }));
-
-    this.seriesFilterOptions = this.seriesStorage.getAll().map((series) => ({
-      id: series.id,
-      value: series.title,
-      checked: false,
-    }));
-  }
 
   /**
    * @inheritDoc
    */
   ngOnInit() {
+    this.initFilters();
     this.fetchBooks();
   }
 
+  /** Opens filters sidebar */
   openFilters(template: TemplateRef<any>) {
     this.offcanvas.open(template, { position: 'start' });
+  }
+
+  /**
+   * Inits filters
+   */
+  initFilters() {
+    this.authorFilterOptions = this.authorStorage.getAll().map((author) => ({
+      id: author.id,
+      value: author.name,
+      checked: !!this.authorFilter?.split(',').includes(author.id.toString()),
+    }));
+
+    this.genreFilterOptions = this.genreStorage.getAll().map((genre) => ({
+      id: genre.id,
+      value: genre.name,
+      checked: !!this.genreFilter?.split(',').includes(genre.id.toString()),
+    }));
+
+    this.seriesFilterOptions = this.seriesStorage.getAll().map((series) => ({
+      id: series.id,
+      value: series.title,
+      checked: !!this.seriesFilter?.split(',').includes(series.id.toString()),
+    }));
   }
 
   /**
@@ -99,18 +112,70 @@ export class BooksPage implements OnInit {
   }
 
   /**
+   * Handles on search keyup action
+   */
+  async onSearchKeyup() {
+    await this.queryParamStore.updateQueryParams({ searchQuery: this.searchQuery || null });
+    this.fetchBooks();
+  }
+
+  /**
+   * Handles on author filter change
+   */
+  async onAuthorFilterChange() {
+    await this.queryParamStore.updateQueryParams({
+      authorFilter: this.authorFilterOptions
+        .filter((item) => item.checked)
+        .map((item) => item.id)
+        .join(',') || null
+    });
+    this.fetchBooks();
+  }
+
+  /**
+   * Handles on genre filter change
+   */
+  async onGenreFilterChange() {
+    await this.queryParamStore.updateQueryParams({
+      genreFilter: this.genreFilterOptions
+        .filter((item) => item.checked)
+        .map((item) => item.id)
+        .join(',') || null
+    });
+    this.fetchBooks();
+  }
+
+  /**
+   * Handles on series filter change
+   */
+  async onSeriesFilterChange() {
+    await this.queryParamStore.updateQueryParams({
+      seriesFilter: this.seriesFilterOptions
+        .filter((item) => item.checked)
+        .map((item) => item.id)
+        .join(',') || null
+    });
+    this.fetchBooks();
+  }
+
+  /**
    * Updates books list
    * @protected
    */
   protected fetchBooks() {
-
     this.booksList.set(
       this.bookStorage.getAll({
         searchQuery: this.searchQuery,
         sortingOrder: this.sortingOrder,
-        authorsIds: this.authorFilterOptions.filter((item) => item.checked).map((item) => <AuthorsCollection>item.id),
-        genresIds: this.genreFilterOptions.filter((item) => item.checked).map((item) => <GenresCollection>item.id),
-        seriesIds: this.seriesFilterOptions.filter((item) => item.checked).map((item) => <SeriesCollection>item.id),
+        authorsIds: this.authorFilterOptions
+          .filter((item) => item.checked)
+          .map((item) => <AuthorsCollection>item.id),
+        genresIds: this.genreFilterOptions
+          .filter((item) => item.checked)
+          .map((item) => <GenresCollection>item.id),
+        seriesIds: this.seriesFilterOptions
+          .filter((item) => item.checked)
+          .map((item) => <SeriesCollection>item.id),
       })
     );
   }

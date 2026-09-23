@@ -1,6 +1,6 @@
 <div class="container actions-container">
   <div class="input-group">
-    <input type="search" class="form-control rounded-pill shadow" placeholder="Пошук..." [(ngModel)]="searchQuery" (keyup)="fetchBooks()">
+    <input type="text" class="form-control rounded-pill shadow" placeholder="Пошук..." [(ngModel)]="searchQuery" (keyup)="onSearchKeyup()">
     <button (click)="onSorting()" class="btn btn-light rounded-pill shadow">
       Сортувати
       @if (sortingOrder === 'asc') {
@@ -69,7 +69,7 @@
         <div class="card-filter-collapse" [(ngbCollapse)]="authorFilterCollapse">
           @for (author of authorFilterOptions; track $index) {
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" [id]="author.value" [(ngModel)]="author.checked" (ngModelChange)="fetchBooks()">
+              <input class="form-check-input" type="checkbox" [id]="author.value" [(ngModel)]="author.checked" (ngModelChange)="onAuthorFilterChange()">
               <label class="form-check-label" [for]="author.value">{{ author.value }}</label>
             </div>
           }
@@ -91,7 +91,7 @@
         <div class="card-filter-collapse" [(ngbCollapse)]="genreFilterCollapse">
           @for (genre of genreFilterOptions; track $index) {
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" [id]="genre.value" [(ngModel)]="genre.checked" (ngModelChange)="fetchBooks()">
+              <input class="form-check-input" type="checkbox" [id]="genre.value" [(ngModel)]="genre.checked" (ngModelChange)="onGenreFilterChange()">
               <label class="form-check-label" [for]="genre.value">{{ genre.value }}</label>
             </div>
           }
@@ -113,7 +113,7 @@
         <div class="card-filter-collapse" [(ngbCollapse)]="seriesFilterCollapse">
           @for (series of seriesFilterOptions; track $index) {
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" [id]="series.value" [(ngModel)]="series.checked" (ngModelChange)="fetchBooks()">
+              <input class="form-check-input" type="checkbox" [id]="series.value" [(ngModel)]="series.checked" (ngModelChange)="onSeriesFilterChange()">
               <label class="form-check-label" [for]="series.value">{{ series.value }}</label>
             </div>
           }
