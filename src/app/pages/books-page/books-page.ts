@@ -1,17 +1,22 @@
-import { Component, inject, OnInit, signal, TemplateRef, ChangeDetectionStrategy, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input, OnInit, signal, TemplateRef } from '@angular/core';
 import {
-  AuthorsCollection,
+  Book,
   BookCard,
-  BookStorage, FilterCheckboxInterfaces,
-  GenresCollection,
-  GenreStorage,
-  NoResults, QueryParamsStore, SeriesCollection, SeriesStorage,
+  DataProvider,
+  FilterCheckboxInterfaces,
+  NoResults,
+  QueryParamsStore,
   SortingOrder
 } from '../../shared';
 import { FormsModule } from '@angular/forms';
-import { NgbCollapse, NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
-import { AuthorStorage } from '../../shared';
-import { BookModel } from '../../shared/models';
+import {
+  NgbAccordionBody,
+  NgbAccordionButton,
+  NgbAccordionCollapse, NgbAccordionDirective, NgbAccordionHeader, NgbAccordionItem,
+  NgbCollapse,
+  NgbModal,
+  NgbOffcanvas
+} from '@ng-bootstrap/ng-bootstrap';
 import { RouterLink } from '@angular/router';
 
 
@@ -23,6 +28,12 @@ import { RouterLink } from '@angular/router';
     NoResults,
     NgbCollapse,
     RouterLink,
+    NgbAccordionBody,
+    NgbAccordionButton,
+    NgbAccordionCollapse,
+    NgbAccordionDirective,
+    NgbAccordionHeader,
+    NgbAccordionItem,
   ],
   templateUrl: './books-page.html',
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -39,20 +50,16 @@ export class BooksPage implements OnInit {
   @Input() genreFilter?: string;
   /** Series filter */
   @Input() seriesFilter?: string;
-  /** Book Storage */
-  private bookStorage = inject(BookStorage);
-  /** Author Storage */
-  private authorStorage = inject(AuthorStorage);
-  /** Genre Storage */
-  private genreStorage = inject(GenreStorage);
-  /** Series Storage */
-  private seriesStorage = inject(SeriesStorage);
+  /** Data Provider */
+  private dataProvider = inject(DataProvider);
   /** Query Param Store */
   private queryParamStore = inject(QueryParamsStore);
   /** Offcanvas */
   private offcanvas = inject(NgbOffcanvas);
+  /** Modal */
+  private modal = inject(NgbModal);
   /** List of books */
-  booksList = signal<BookModel[]>([]);
+  booksList = signal<Book[]>([]);
   /** Author filter options */
   authorFilterOptions: FilterCheckboxInterfaces[] = [];
   /** Author filter collapse state */
@@ -65,6 +72,8 @@ export class BooksPage implements OnInit {
   seriesFilterOptions: FilterCheckboxInterfaces[] = [];
   /** Series filter collapse state */
   seriesFilterCollapse = false;
+  /** Book to show in modal */
+  modalBook?: Book;
 
   /**
    * @inheritDoc
@@ -79,26 +88,33 @@ export class BooksPage implements OnInit {
     this.offcanvas.open(template, { position: 'end' });
   }
 
+  openModal(book: Book, template: TemplateRef<any>) {
+    this.modalBook = book;
+    this.modal.open(template, {
+      size: 'xl',
+      animation: true,
+    });
+  }
+
   /**
    * Inits filters
    */
   initFilters() {
-    this.authorFilterOptions = this.authorStorage.getAll().map((author) => ({
-      id: author.id,
-      value: author.name,
-      checked: !!this.authorFilter?.split(',').includes(author.id.toString()),
-    }));
+    this.authorFilterOptions = this.getFilterOptions(this.dataProvider.getAuthors(), this.authorFilter);
+    this.genreFilterOptions = this.getFilterOptions(this.dataProvider.getGenres(), this.genreFilter);
+    this.seriesFilterOptions = this.getFilterOptions(this.dataProvider.getSeries(), this.seriesFilter);
+  }
 
-    this.genreFilterOptions = this.genreStorage.getAll().map((genre) => ({
-      id: genre.id,
-      value: genre.name,
-      checked: !!this.genreFilter?.split(',').includes(genre.id.toString()),
-    }));
-
-    this.seriesFilterOptions = this.seriesStorage.getAll().map((series) => ({
-      id: series.id,
-      value: series.title,
-      checked: !!this.seriesFilter?.split(',').includes(series.id.toString()),
+  /**
+   * Returns filter options
+   * @param collection - Related collection
+   * @param queryParam - Query parameter for the related filter
+   */
+  getFilterOptions(collection: string[], queryParam?: string): FilterCheckboxInterfaces[] {
+    return collection.map((item, index) => ({
+      id: index,
+      value: item,
+      checked: !!queryParam?.split(',').includes(index.toString()),
     }));
   }
 
@@ -162,20 +178,28 @@ export class BooksPage implements OnInit {
    * Updates books list
    */
   fetchBooks() {
+    const text = this.searchQuery ?? '';
+
+    const authors = this.authorFilterOptions
+      .filter((item) => item.checked)
+      .map((item) => item.value);
+
+    const genres = this.genreFilterOptions
+      .filter((item) => item.checked)
+      .map((item) => item.value);
+
+    const series = this.seriesFilterOptions
+      .filter((item) => item.checked)
+      .map((item) => item.value);
+
+
     this.booksList.set(
-      this.bookStorage.getAll({
-        searchQuery: this.searchQuery,
-        sortingOrder: this.sortingOrder,
-        authorsIds: this.authorFilterOptions
-          .filter((item) => item.checked)
-          .map((item) => <AuthorsCollection>item.id),
-        genresIds: this.genreFilterOptions
-          .filter((item) => item.checked)
-          .map((item) => <GenresCollection>item.id),
-        seriesIds: this.seriesFilterOptions
-          .filter((item) => item.checked)
-          .map((item) => <SeriesCollection>item.id),
-      })
-    );
+      this.dataProvider.getBooks({
+        text,
+        authors,
+        genres,
+        series
+      }, this.sortingOrder),
+    )
   }
 }

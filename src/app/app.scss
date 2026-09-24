@@ -3,5 +3,5 @@
 @import 'variables';
 
 .main-content {
-  min-height: calc(100dvh - #{$app-header-height} - #{$app-footer-height} - 4 * 8px);
+  min-height: calc(100dvh - #{$app-footer-height} - 2 * 8px);
 }

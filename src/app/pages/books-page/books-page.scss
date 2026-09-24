@@ -6,3 +6,28 @@
     margin-top: -16px;
   }
 }
+
+.modal-body {
+  .row {
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    img {
+      width: 100%;
+    }
+
+    .genres-wrapper {
+      margin-top: 8px;
+
+      .badge {
+        margin-right: 4px;
+      }
+    }
+  }
+
+  .description-container {
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

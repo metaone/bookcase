@@ -1,26 +1,10 @@
 import { Routes } from '@angular/router';
-import { AuthorsPage, BookPage, BooksPage, SeriesPage, WorksPage } from './pages';
+import { BooksPage } from './pages';
 
 export const routes: Routes = [
   {
     path: 'books',
     component: BooksPage,
-  },
-  {
-    path: 'books/:bookId',
-    component: BookPage,
-  },
-  {
-    path: 'authors',
-    component: AuthorsPage,
-  },
-  {
-    path: 'works',
-    component: WorksPage,
-  },
-  {
-    path: 'series',
-    component: SeriesPage,
   },
   {
     path: '**',

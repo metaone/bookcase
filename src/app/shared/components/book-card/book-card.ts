@@ -1,7 +1,6 @@
 import { Component, input, ChangeDetectionStrategy } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { BookModel } from '../../models';
 import { NgOptimizedImage } from '@angular/common';
+import { Book } from '../../interfaces';
 
 /**
  * Book card component
@@ -9,7 +8,6 @@ import { NgOptimizedImage } from '@angular/common';
 @Component({
   selector: 'app-book-card',
   imports: [
-    RouterLink,
     NgOptimizedImage
   ],
   templateUrl: './book-card.html',
@@ -18,5 +16,5 @@ import { NgOptimizedImage } from '@angular/common';
 })
 export class BookCard {
   /** Book */
-  book = input.required<BookModel>()
+  book = input.required<Book>()
 }

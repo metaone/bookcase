@@ -1,7 +1,12 @@
-import { Collection } from '../types';
-
 export interface FilterCheckboxInterfaces {
-  id: Collection;
+  id: number;
   value: string;
   checked: boolean;
+}
+
+export interface SearchOptions {
+  text: string
+  authors: string[];
+  genres: string[],
+  series: string[],
 }

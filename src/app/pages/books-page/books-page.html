@@ -1,6 +1,11 @@
-<div class="container actions-container">
-  <div class="input-group">
-    <input type="text" class="form-control rounded-pill shadow" placeholder="Пошук..." [(ngModel)]="searchQuery" (keyup)="onSearchKeyup()">
+<div class="sticky-top1">
+  <div class="container actions-container">
+    <div class="input-group">
+      <input type="text" class="form-control rounded-pill shadow" placeholder="Пошук..." [(ngModel)]="searchQuery" (keyup)="onSearchKeyup()">
+    </div>
+  </div>
+
+  <div class="container actions-container text-end">
     <button (click)="onSorting()" class="btn btn-light rounded-pill shadow">
       Сортувати
       @if (sortingOrder === 'asc') {
@@ -19,22 +24,12 @@
 <div class="container page-container">
   <div class="card shadow">
     <div class="card-body">
-      <nav>
-        <ol class="breadcrumb align-items-center">
-          <li class="breadcrumb-item">
-            <a routerLink="/">Головна</a>
-          </li>
-          <li class="breadcrumb-item">
-            Книги
-          </li>
-        </ol>
-      </nav>
-
       @if (booksList().length) {
         <div class="row">
           @for (book of booksList(); track $index) {
             <app-book-card
               class="col-4 col-md-3 col-lg-2"
+              (click)="openModal(book, modal)"
               [book]="book">
             </app-book-card>
           }
@@ -117,6 +112,93 @@
               <label class="form-check-label" [for]="series.value">{{ series.value }}</label>
             </div>
           }
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body" ngbAutofocus tabindex="-1">
+    <div class="row">
+      <div class="col-4 col-md-4 col-lg-2">
+        <!--suppress AngularNgOptimizedImage -->
+        <img class="shadow-lg" src="covers/{{ modalBook?.cover }}" />
+      </div>
+      <div class="col-8 col-md-8 col-lg-10">
+        <h3>{{ modalBook?.title }}</h3>
+        <div class="authors-wrapper">
+          @for (author of modalBook?.authors; track $index) {
+            <a [routerLink]="['/authors', author]">{{ author }}</a>
+            @if (!$last) {, }
+          }
+        </div>
+        <div class="genres-wrapper">
+          @for (genre of modalBook?.genres; track $index) {
+            <span class="badge text-bg-primary user-select-none">{{ genre }}</span>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div ngbAccordion>
+      @if (modalBook?.works?.length) {
+        <div ngbAccordionItem>
+          <h2 ngbAccordionHeader>
+            <button ngbAccordionButton>Зміст</button>
+          </h2>
+          <div ngbAccordionCollapse>
+            <div ngbAccordionBody>
+              <ng-template>
+                @for (item of modalBook?.works; track $index) {
+                  <div>
+                    <span>{{ item.title }}</span> (@for (author of item.authors; track $index) {
+                    <a href="#">{{ author }}</a>
+                    @if (!$last) {, }
+                  })
+                  </div>
+                }
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      }
+
+      @if (modalBook?.series) {
+        <div ngbAccordionItem>
+          <h2 ngbAccordionHeader>
+            <button ngbAccordionButton>Серія</button>
+          </h2>
+          <div ngbAccordionCollapse>
+            <div ngbAccordionBody>
+              <ng-template>
+                <div>
+                  {{ modalBook?.series }}
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      }
+
+      <div ngbAccordionItem [collapsed]="false">
+        <h2 ngbAccordionHeader>
+          <button ngbAccordionButton>Опис</button>
+        </h2>
+        <div ngbAccordionCollapse>
+          <div ngbAccordionBody>
+            <ng-template>
+              <div class="description-container">
+                @for (p of modalBook?.blurp; track $index) {
+                  <p>{{ p }}</p>
+                }
+              </div>
+            </ng-template>
+          </div>
         </div>
       </div>
     </div>

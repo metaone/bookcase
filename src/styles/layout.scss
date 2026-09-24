@@ -26,9 +26,12 @@ body {
   padding-top: 8px;
   padding-bottom: 8px;
 
-  .input-group {
-    .btn {
-      margin-left: 4px !important;
-    }
+  .btn {
+    margin-left: 4px !important;
   }
+}
+
+.modal-body:focus,
+.modal-body:focus-visible {
+  outline: none;
 }
