@@ -4,17 +4,31 @@ import { BooksData } from '../data';
 import { Book, SearchOptions } from '../interfaces';
 import { SortingOrder } from '../types';
 
+/** Compare util function */
 const compare = new Intl.Collator('uk', { sensitivity: 'base' }).compare;
 
 @Service()
 export class DataProvider {
+  /** Books data */
   private readonly booksData = BooksData;
+  /** List of all search keys for Fuse.js */
   private readonly searchKeys = ['title', 'authors', 'genres', 'series', 'works.title', 'works.authors'];
-
+  /** List of authors */
   private readonly authors: string[];
+  /** List of series */
   private readonly series: string[];
+  /** List of genres */
   private readonly genres: string[];
+  /** Fuse.js instance with loaded books data */
+  private fuse = new Fuse(this.booksData, {
+    keys: this.searchKeys,
+    useExtendedSearch: true,
+    threshold: 0.3,
+  });
 
+  /**
+   * @inheritDoc
+   */
   constructor() {
     const authors = new Set<string>();
     const series = new Set<string>();
@@ -34,24 +48,32 @@ export class DataProvider {
     this.genres = [...genres].sort(compare);
   }
 
-  private fuse = new Fuse(this.booksData, {
-    keys: this.searchKeys,
-    useExtendedSearch: true,
-    threshold: 0.3,
-  });
-
+  /**
+   * Returns list of all authors
+   */
   getAuthors(): string[] {
     return this.authors;
   }
 
+  /**
+   * Returns list of all book series
+   */
   getSeries(): string[] {
     return this.series;
   }
 
+  /**
+   * Returns list of all book genres
+   */
   getGenres(): string[] {
     return this.genres;
   }
 
+  /**
+   * Returns list of books
+   * @param options - Search options
+   * @param sorting - Sorting order
+   */
   getBooks(options: SearchOptions, sorting: SortingOrder = 'asc'): Book[] {
     const conditions: Expression[] = [];
 
